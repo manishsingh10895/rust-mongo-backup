@@ -1,0 +1,8 @@
+[root]
+user = "manish"
+pass = "terminator"
+
+[dbs]
+dbs = [
+    { name = "todos", user = "todoUser", pass = "terminator"}
+]

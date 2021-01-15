@@ -2,7 +2,7 @@ use futures::prelude::*;
 use log::{debug, error, info, log_enabled, Level};
 use std::process::Command;
 use tokio::prelude::*;
-
+mod settings;
 const BUCKET_URL: &str = "asd";
 const ROOT_USER: &str = "manish";
 const ROOT_PASS: &str = "terminator";
@@ -12,15 +12,13 @@ async fn app() {
     todo!();
 }
 
-fn dump() {
-    let db = "todos";
-    let cmd = format!("mongodump  -u {} -p{} --authenticationDatabase=admin --db={} --gzip --archive=dumparchives/{}.archive", ROOT_USER, ROOT_PASS, db, db );
+fn dump(name: &str, user: &str, pass: &str, root: &settings::Root) {
+    let cmd = format!("mongodump  -u {} -p{} --authenticationDatabase=admin --db={} --gzip --archive=dumparchives/{}.archive", root.user, root.pass, name, name );
     let output = Command::new(cmd).output().expect("Failed to dump");
 }
 
-fn restore() {
-    let db = "todos";
-    let cmd = format!("mongorestore  -u {} -p{} --authenticationDatabase=admin --db={} --gzip --archive=dumparchives/{}.archive", ROOT_USER, ROOT_PASS, db, db );
+fn restore(name: &str, user: &str, pass: &str, root: &settings::Root) {
+    let cmd = format!("mongorestore  -u {} -p{} --authenticationDatabase=admin --db={} --gzip --archive=dumparchives/{}.archive", root.user, root.pass, name, name );
     let output = Command::new(cmd).output().expect("Failed to dump");
 }
 
@@ -28,7 +26,13 @@ fn restore() {
 fn main() {
     env_logger::init();
 
-    dump();
+    let sets = settings::Settings::new().unwrap();
+
+    println!("{:?}", sets);
+
+    for db in sets.dbs.dbs {
+        dump(&db.name, &db.user, &db.pass, &sets.root);
+    }
 
     let mut rt = tokio::runtime::Runtime::new().unwrap();
     let future = app();
