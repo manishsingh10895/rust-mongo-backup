@@ -1,0 +1,17 @@
+[package]
+name = "mongodump"
+version = "0.1.0"
+authors = ["manishsingh <manishsingh10895@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures = { version = "0.3.*" }
+tokio = {version = "0.2.*", features = ["full"] }
+log = "0.4.13"
+env_logger = "0.8.2"
+reqwest = "0.11.0"
+rusoto_core = "0.46.0"
+rusoto_sqs = "0.46.0"
+rusoto_s3 = "0.46.0"
