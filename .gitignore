@@ -1,1 +1,7 @@
 /target
+/dumper/
+dumparchive/
+archives/
+.vscode/
+.cargo/
+mongodump

@@ -1,9 +1,9 @@
 [root]
-user = "manish"
 pass = "terminator"
+user = "manish"
 
 [dbs]
 dbs = [
-    { name = "todos", user = "todoUser", pass = "terminator"}
+  {name = "todos", user = "todoUser", pass = "terminator"},
+  {name = "nodos", user = "nodoUser", pass = "terminator"},
 ]
-
